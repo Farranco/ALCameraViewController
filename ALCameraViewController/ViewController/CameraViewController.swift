@@ -15,6 +15,24 @@ import UIKit
 import AVFoundation
 import Photos
 
+@objcMembers
+public class CaptureImageSwift: NSObject {
+
+    public class func getImage(completion: @escaping (UIImage?) -> Void) -> UIViewController {
+        let minimumSize: CGSize = CGSize(width: 100, height: 100)
+
+        let croppingParameters = CroppingParameters(isEnabled: true, allowResizing: true, allowMoving: false, minimumSize: minimumSize)
+
+        let cameraViewController = CameraViewController(croppingParameters: croppingParameters, allowsLibraryAccess: true, savesImageToLibrary: false) { image, asset in
+            completion(image)
+        }
+        
+        return cameraViewController
+    }
+
+}
+
+
 public typealias CameraViewCompletion = (UIImage?, PHAsset?) -> Void
 
 public extension CameraViewController {
@@ -165,15 +183,18 @@ open class CameraViewController: UIViewController {
     }()
 	
 	private let allowsLibraryAccess: Bool
+    private let savesImageToLibrary: Bool
   
     public init(croppingParameters: CroppingParameters = CroppingParameters(),
                 allowsLibraryAccess: Bool = true,
+                savesImageToLibrary: Bool = true,
                 allowsSwapCameraOrientation: Bool = true,
                 allowVolumeButtonCapture: Bool = true,
                 completion: @escaping CameraViewCompletion) {
 
         self.croppingParameters = croppingParameters
         self.allowsLibraryAccess = allowsLibraryAccess
+        self.savesImageToLibrary = savesImageToLibrary
         self.allowVolumeButtonCapture = allowVolumeButtonCapture
         super.init(nibName: nil, bundle: nil)
         onCompletion = completion
@@ -490,7 +511,7 @@ open class CameraViewController: UIViewController {
         let spinner = showSpinner()
         cameraView.preview.isHidden = true
 
-		if allowsLibraryAccess {
+        if allowsLibraryAccess && savesImageToLibrary {
         _ = SingleImageSaver()
             .setImage(image)
             .onSuccess { [weak self] asset in

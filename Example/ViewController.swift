@@ -86,7 +86,7 @@ class ViewController: UIViewController {
             return
         }
         
-        let cameraViewController = CameraViewController(croppingParameters: croppingParameters, allowsLibraryAccess: libraryEnabled) { [weak self] image, asset in
+        let cameraViewController = CameraViewController(croppingParameters: croppingParameters, allowsLibraryAccess: libraryEnabled, savesImageToLibrary: false,) { [weak self] image, asset in
             if let image = image {
                 self?.imageView.image = image
             }

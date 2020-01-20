@@ -14,7 +14,7 @@ Usage of this fork remains the same as the original but with more options. See t
 
 Incorporate this fork into your project with CocoaPods. Add this line to your podfile:
 
-`pod 'KK-ALCameraViewController'`
+`pod 'ALCameraViewController'`
 
 ## License
 ALCameraViewController is available under the MIT license. See the LICENSE file for more info.  This fork retains the same license.
@@ -38,6 +38,7 @@ ALCameraViewController is available under the MIT license. See the LICENSE file 
 * Update the overlay constraints when rotating, so the overlay is properly positioned and sized
 * If the camera is not available (ie. on simulator), pop up an error rather than crashing
 * Hide flash button if the flash is not available (for instance, iPads)
+* Does not save image to camera roll by default
 
 ## Library Picker
 
